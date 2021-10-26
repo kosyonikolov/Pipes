@@ -2,4 +2,6 @@ build/
 .cache/
 .vscode/
 compile_commands.json
+*.zip.txt
+*.zip
 data/
