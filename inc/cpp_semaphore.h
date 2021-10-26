@@ -9,6 +9,7 @@ private:
     sem_t sem;
 
 public:
+    semaphore();
     semaphore(int value);
     void wait();
     void signal();
