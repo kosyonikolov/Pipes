@@ -31,7 +31,7 @@ void stage1(read_pipe<int> & in, write_pipe<double> & out)
     while (in.read(inVal))
     {
         const double val = inVal;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
         // std::cout << "pass " << val << "\n";
         out.write(std::sqrt(val));
     }
@@ -66,11 +66,13 @@ int main(int, char**)
     std::thread tSrc([&]() { source(pipe1); });
     std::thread tStage1_1([&]() { stage1(pipe1, pipe2);});
     std::thread tStage1_2([&]() { stage1(pipe1, pipe2);});
+    std::thread tStage1_3([&]() { stage1(pipe1, pipe2);});
     std::thread tSink([&]() { sink(pipe2); });
 
     tSrc.join();
     tStage1_1.join();
     tStage1_2.join();
+    tStage1_3.join();
     tSink.join();
 
     auto tEnd = std::chrono::steady_clock::now();
