@@ -7,18 +7,18 @@
 #include "cpp_semaphore.h"
 #include "pipe.h"
 
-void source(Pipe<int> & writeHead)
+void source(write_pipe<int> & out)
 {
     for (int i = 0; i <= 100; i++)
     {
-        writeHead.write(i);
+        out.write(i);
         // std::cout << "push " << i << "\n";
         // std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
-    writeHead.closeWrite();
+    out.closeWrite();
 }
 
-void stage1(Pipe<int> & readHead, Pipe<double> & writeHead)
+void stage1(read_pipe<int> & in, write_pipe<double> & out)
 {
     static int cnt = 0;
     static std::mutex m;
@@ -28,25 +28,25 @@ void stage1(Pipe<int> & readHead, Pipe<double> & writeHead)
     m.unlock();
 
     int inVal;
-    while (readHead.read(inVal))
+    while (in.read(inVal))
     {
         const double val = inVal;
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         // std::cout << "pass " << val << "\n";
-        writeHead.write(std::sqrt(val));
+        out.write(std::sqrt(val));
     }
 
     m.lock();
     cnt--;
-    if (cnt <= 0) writeHead.closeWrite();
+    if (cnt <= 0) out.closeWrite();
     m.unlock();
 }
 
-void sink(Pipe<double> & readHead)
+void sink(read_pipe<double> & in)
 {
     double sum = 0;
     double inVal;
-    while (readHead.read(inVal))
+    while (in.read(inVal))
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         std::cout << inVal << "\n";
@@ -58,8 +58,8 @@ void sink(Pipe<double> & readHead)
 
 int main(int, char**) 
 {
-    Pipe<int> pipe1(10);
-    Pipe<double> pipe2(10);
+    pipe<int> pipe1(10);
+    pipe<double> pipe2(10);
 
     auto tStart = std::chrono::steady_clock::now();
 

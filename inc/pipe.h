@@ -5,19 +5,20 @@
 #include <mutex>
 
 #include "cpp_semaphore.h"
+#include "read_pipe.h"
+#include "write_pipe.h"
 
 template<typename T>
-class Pipe
+class pipe : public read_pipe<T>, public write_pipe<T>
 {
 private:
     std::deque<T> q;
     std::mutex mQ;
     semaphore items, spaces;
-    int capacity;
     bool closedByWriter = false;
 
 public:
-    Pipe(const int cap) : capacity(cap), items(0), spaces(cap) {}
+    pipe(const int cap) : items(0), spaces(cap) {}
 
     bool read(T & outVal)
     {
@@ -62,6 +63,11 @@ public:
     {
         closedByWriter = true;
         items.signal();
+    }
+
+    void closeRead()
+    {
+        // TODO
     }
 };
 
