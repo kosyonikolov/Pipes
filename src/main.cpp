@@ -3,9 +3,12 @@
 #include <chrono>
 #include <queue>
 #include <cmath>
+#include <mutex>
 
 #include "cpp_semaphore.h"
-#include "pipe.h"
+#include "read_pipe.h"
+#include "write_pipe.h"
+#include "ring_pipe.h"
 
 void source(write_pipe<int> & out)
 {
@@ -58,8 +61,8 @@ void sink(read_pipe<double> & in)
 
 int main(int, char**) 
 {
-    pipe<int> pipe1(10);
-    pipe<double> pipe2(10);
+    ring_pipe<int> pipe1(10);
+    ring_pipe<double> pipe2(10);
 
     auto tStart = std::chrono::steady_clock::now();
 

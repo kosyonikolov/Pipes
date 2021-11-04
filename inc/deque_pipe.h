@@ -1,5 +1,5 @@
-#ifndef PIPES_PIPE_H
-#define PIPES_PIPE_H
+#ifndef PIPES_DEQUE_PIPE_H
+#define PIPES_DEQUE_PIPE_H
 
 #include <deque>
 #include <mutex>
@@ -9,7 +9,7 @@
 #include "write_pipe.h"
 
 template<typename T>
-class pipe : public read_pipe<T>, public write_pipe<T>
+class deque_pipe : public read_pipe<T>, public write_pipe<T>
 {
 private:
     std::deque<T> q;
@@ -18,7 +18,7 @@ private:
     bool closedByWriter = false;
 
 public:
-    pipe(const int cap) : items(0), spaces(cap) {}
+    deque_pipe(const int cap) : items(0), spaces(cap) {}
 
     bool read(T & outVal)
     {
