@@ -13,6 +13,7 @@ public:
     semaphore(int value);
     void wait();
     void signal();
+    int querry();
 };
 
 #endif

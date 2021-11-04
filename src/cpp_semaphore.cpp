@@ -20,3 +20,10 @@ void semaphore::signal()
 {
     sem_post(&sem);
 }
+
+int semaphore::querry()
+{
+    int val;
+    sem_getvalue(&sem, &val);
+    return val;
+}
