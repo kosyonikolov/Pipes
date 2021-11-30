@@ -48,26 +48,18 @@ double timePipe(Pipe & p)
 
 int main(int, char**) 
 {
-    ring_pipe<int, semaphore> p1(16);
-    ring_pipe<int, semaphore> p2(256);
-    ring_pipe<int, semaphore> p3(1024);
-    ring_pipe<int, semaphore_cpp20> p4(16);
-    ring_pipe<int, semaphore_cpp20> p5(256);
-    ring_pipe<int, semaphore_cpp20> p6(1024);
+    ring_pipe<int, semaphore> p1(256);
+    ring_pipe<int, semaphore_cpp20> p2(256);
 
     const auto t1 = timePipe(p1);
     const auto t2 = timePipe(p2);
-    const auto t3 = timePipe(p3);
-    const auto t4 = timePipe(p4);
-    const auto t5 = timePipe(p5);
-    const auto t6 = timePipe(p6);
 
     std::cout << "p1 = " << t1 << " ms\n";
     std::cout << "p2 = " << t2 << " ms\n";
-    std::cout << "p3 = " << t3 << " ms\n";
-    std::cout << "p4 = " << t4 << " ms\n";
-    std::cout << "p5 = " << t5 << " ms\n";
-    std::cout << "p6 = " << t6 << " ms\n";
+    // std::cout << "p3 = " << t3 << " ms\n";
+    // std::cout << "p4 = " << t4 << " ms\n";
+    // std::cout << "p5 = " << t5 << " ms\n";
+    // std::cout << "p6 = " << t6 << " ms\n";
 
     return 0;
 }

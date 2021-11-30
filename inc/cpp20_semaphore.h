@@ -6,7 +6,7 @@
 class semaphore_cpp20
 {
 private:
-    std::counting_semaphore<1024> sem;
+    std::counting_semaphore<256> sem;
 
 public:
     semaphore_cpp20();
