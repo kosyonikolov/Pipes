@@ -1,5 +1,5 @@
-#ifndef PIPES_DEQUE_PIPE_H
-#define PIPES_DEQUE_PIPE_H
+#ifndef PIPES_RING_PIPE_H
+#define PIPES_RING_PIPE_H
 
 #include <memory>
 #include <mutex>
