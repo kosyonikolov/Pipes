@@ -11,10 +11,11 @@
 #include "read_pipe.h"
 #include "write_pipe.h"
 #include "ring_pipe.h"
+#include "ring2_pipe.h"
 
 void source(write_pipe<int> & out)
 {
-    for (int i = 0; i < 1 << 22; i++)
+    for (int i = 1; i <= 1 << 20; i++)
     {
         out.write(i);
     }
@@ -27,6 +28,7 @@ void sink(read_pipe<int> & in)
     int inVal;
     while (in.read(inVal))
     {
+        // std::cout << inVal << "\n";
         sum += inVal;
     }
 
@@ -50,13 +52,15 @@ int main(int, char**)
 {
     ring_pipe<int, semaphore> p1(256);
     ring_pipe<int, semaphore_cpp20> p2(256);
+    ring2_pipe<int> p3(256);
 
+    const auto t3 = timePipe(p3);
     const auto t1 = timePipe(p1);
     const auto t2 = timePipe(p2);
-
+    
     std::cout << "p1 = " << t1 << " ms\n";
     std::cout << "p2 = " << t2 << " ms\n";
-    // std::cout << "p3 = " << t3 << " ms\n";
+    std::cout << "p3 = " << t3 << " ms\n";
     // std::cout << "p4 = " << t4 << " ms\n";
     // std::cout << "p5 = " << t5 << " ms\n";
     // std::cout << "p6 = " << t6 << " ms\n";
