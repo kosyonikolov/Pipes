@@ -15,7 +15,7 @@
 
 void source(write_pipe<int> & out)
 {
-    for (int i = 1; i <= 1 << 20; i++)
+    for (int i = 1; i <= 1 << 25; i++)
     {
         out.write(i);
     }
