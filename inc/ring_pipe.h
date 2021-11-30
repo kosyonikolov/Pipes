@@ -4,11 +4,10 @@
 #include <memory>
 #include <mutex>
 
-#include "cpp_semaphore.h"
 #include "read_pipe.h"
 #include "write_pipe.h"
 
-template<typename T>
+template<typename T, typename semaphore>
 class ring_pipe : public read_pipe<T>, public write_pipe<T>
 {
 private:
