@@ -58,9 +58,9 @@ int main(int, char**)
     const auto t1 = timePipe(p1);
     const auto t2 = timePipe(p2);
     const auto t3 = timePipe(p3);
-    const auto t4 = timePipe(p1);
-    const auto t5 = timePipe(p2);
-    const auto t6 = timePipe(p3);
+    const auto t4 = timePipe(p4);
+    const auto t5 = timePipe(p5);
+    const auto t6 = timePipe(p6);
 
     std::cout << "p1 = " << t1 << " ms\n";
     std::cout << "p2 = " << t2 << " ms\n";
