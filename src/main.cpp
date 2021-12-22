@@ -50,9 +50,9 @@ double timePipe(Pipe & p)
 
 int main(int, char**) 
 {
-    ring_pipe<int, semaphore> p1(256);
-    ring_pipe<int, semaphore_cpp20> p2(256);
-    ring2_pipe<int> p3(256);
+    ring_pipe<int, semaphore> p1(1024);
+    ring_pipe<int, semaphore_cpp20> p2(1024);
+    ring2_pipe<int> p3(1024);
 
     const auto t3 = timePipe(p3);
     const auto t1 = timePipe(p1);
