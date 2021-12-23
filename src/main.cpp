@@ -12,7 +12,10 @@
 
 #include <MtLib/posix_semaphore.h>
 #include <MtLib/lbs_pipe.h>
+#include <MtLib/spinlock_pipe.h>
+
 #include <NsLib/ring.h>
+#include <NsLib/atomic_ring.h>
 
 template<typename P>
 requires mt::write_pipe<P, int>
@@ -68,14 +71,13 @@ int main(int, char**)
     testSem<mt::posix_semaphore>();
 
     mt::lbs_pipe<int, ns::ring<int>, mt::posix_semaphore> p1(1024);
+    mt::spinlock_pipe<int, ns::atomic_ring<int>> p2(1024);
 
     const auto t1 = timePipe(p1);
-
-    // const auto t3 = timePipe(p3);
-    // const auto t2 = timePipe(p2);
+    const auto t2 = timePipe(p2);
     
     std::cout << "p1 = " << t1 << " ms\n";
-    // std::cout << "p2 = " << t2 << " ms\n";
+    std::cout << "p2 = " << t2 << " ms\n";
     // std::cout << "p3 = " << t3 << " ms\n";
     // std::cout << "p4 = " << t4 << " ms\n";
     // std::cout << "p5 = " << t5 << " ms\n";
