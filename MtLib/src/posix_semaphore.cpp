@@ -1,4 +1,4 @@
-#include <MtLib/posix_semaphore.h>
+#include <mt/posix_semaphore.h>
 
 namespace mt 
 {

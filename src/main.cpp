@@ -7,12 +7,12 @@
 #include <random>
 #include <array>
 
-#include <MtLib/csemaphore.h>
-#include <MtLib/cpipe.h>
+#include <mt/csemaphore.h>
+#include <mt/cpipe.h>
 
-#include <MtLib/posix_semaphore.h>
-#include <MtLib/lbs_pipe.h>
-#include <MtLib/spinlock_pipe.h>
+#include <mt/posix_semaphore.h>
+#include <mt/lbs_pipe.h>
+#include <mt/spinlock_pipe.h>
 
 #include <NsLib/ring.h>
 #include <NsLib/atomic_ring.h>

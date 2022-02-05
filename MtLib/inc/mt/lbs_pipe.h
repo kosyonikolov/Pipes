@@ -4,7 +4,7 @@
 #include <concepts>
 #include <mutex>
 
-#include <MtLib/csemaphore.h>
+#include <mt/csemaphore.h>
 
 namespace mt
 {
