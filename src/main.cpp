@@ -14,8 +14,8 @@
 #include <mt/lbs_pipe.h>
 #include <mt/spinlock_pipe.h>
 
-#include <NsLib/ring.h>
-#include <NsLib/atomic_ring.h>
+#include <ns/ring.h>
+#include <ns/atomic_ring.h>
 
 template<typename P>
 requires mt::write_pipe<P, int>
