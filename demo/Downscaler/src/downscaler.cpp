@@ -112,7 +112,8 @@ int main(int argc, char ** argv)
     };
 
     std::thread tSrc(sourceF);
-    std::thread tDs(dsF);
+    std::thread tDs1(dsF);
+    std::thread tDs2(dsF);
     std::thread tSave(saveF);
 
     using namespace std::chrono_literals;
@@ -125,7 +126,8 @@ int main(int argc, char ** argv)
     }
 
     tSrc.join();
-    tDs.join();
+    tDs1.join();
+    tDs2.join();
     tSave.join();
 
     return 0;
