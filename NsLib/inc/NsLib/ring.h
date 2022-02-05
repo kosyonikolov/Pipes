@@ -2,6 +2,7 @@
 #define NS_RING_H
 
 #include <memory>
+#include <algorithm>
 
 namespace ns
 {
@@ -26,7 +27,11 @@ namespace ns
             data = std::unique_ptr<T[]>(new T[cap]);
         }
 
-        ring(ring & other) = delete;
+        ring(const ring & other) : capacity(other.cap), iBeg(other.iBeg), iEnd(other.iEnd), count(other.count)
+        {
+            data = std::unique_ptr<T[]>(new T[capacity]);
+            std::copy_n(other.data.get(), count, data.get());
+        }
 
         bool empty() const
         {
