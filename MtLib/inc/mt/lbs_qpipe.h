@@ -1,5 +1,5 @@
-#ifndef MTL_LBS_PIPE_H
-#define MTL_LBS_PIPE_H
+#ifndef MTL_LBS_QPIPE_H
+#define MTL_LBS_QPIPE_H
 
 #include <concepts>
 #include <cstddef>
@@ -11,13 +11,13 @@
 
 namespace mt
 {
-    template<class T, class SequentialContainer, mt::semaphore Sem>
+    template<class T, mt::semaphore Sem, class SequentialContainer>
     requires requires (SequentialContainer c, const T value, size_t k)
     {
-        {c.data()} -> std::convertible_to<T>;
+        {c.data()} -> std::convertible_to<T*>;
         {c.size()} -> std::convertible_to<size_t>;
     }
-    class lbs_pipe
+    class lbs_qpipe
     {
     private:
         using guard = std::lock_guard<std::mutex>;
@@ -32,7 +32,7 @@ namespace mt
         bool closedByReader = false;
 
     public:
-        lbs_pipe(SequentialContainer & data) : data(data), semFree(data.size()) 
+        lbs_qpipe(SequentialContainer & data) : data(data), semFree(data.size()) 
         {
             for (size_t i = 0; i < data.size(); i++) free.push_back(i);
         }
@@ -60,7 +60,7 @@ namespace mt
 
         void finish_read(const T * value)
         {
-            const ptrdiff_t id = value - data.size();
+            const ptrdiff_t id = value - data.data();
             assert(id >= 0 && id < data.size());
 
             mFree.lock();
@@ -90,7 +90,7 @@ namespace mt
 
         void finish_write(const T * value)
         {
-            const ptrdiff_t id = value - data.size();
+            const ptrdiff_t id = value - data.data();
             assert(id >= 0 && id < data.size());
 
             mReady.lock();
@@ -109,6 +109,11 @@ namespace mt
         {
             closedByReader = true;
             semFree.signal();
+        }
+
+        size_t count() const
+        {
+            return ready.size();
         }
     };
 }
